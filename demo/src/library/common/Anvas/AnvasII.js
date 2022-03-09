@@ -150,7 +150,6 @@ class AnvasII extends Component {
 
     function solvePolyEqnHandler() {
       const inputField = document.getElementById('fieldPolyEqn');
-      alert(inputField.value);
 
       //  https://hesv-backend.herokuapp.com/equations/solve-polynomial-equation
 
