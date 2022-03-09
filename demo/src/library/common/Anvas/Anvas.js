@@ -135,43 +135,42 @@ class Anvas extends Component {
       'https://upload.wikimedia.org/wikipedia/commons/a/a1/Nepalese_Mhapuja_Mandala.jpg',
       'https://i.imgur.com/a0CGGVC.jpg',
     ],
+
+    x: 0,
+    y: 0,
+    z: 0,
   };
 
   render() {
+    const setSolnData = (x, y, z) => {
+      this.setState({
+        x: x,
+        y: y,
+        z: z,
+      });
+    };
+
     // ! _______________________PRIMARY FUNCTIONS_______________________
 
-    // function convertURIToImageData(URI) {
-    //   return new Promise(function (resolve, reject) {
-    //     if (URI == null) return reject();
-    //     var canvas = document.createElement('canvas'),
-    //       context = canvas.getContext('2d'),
-    //       image = new Image();
-    //     image.addEventListener(
-    //       'load',
-    //       function () {
-    //         canvas.width = image.width;
-    //         canvas.height = image.height;
-    //         context.drawImage(image, 0, 0, canvas.width, canvas.height);
-    //         resolve(context.getImageData(0, 0, canvas.width, canvas.height));
-    //       },
-    //       false
-    //     );
-    //     image.src = URI;
-    //   });
-    // }
-    // var URI =
-    //   'data:image/x-icon;base64,AAABAAEAEBAAAAEAIABoBAAAFgAAACgAAAAQAAAAIAAAAAEAIAAAAAAAQAQAABMLAAATCwAAAAAAAAAAAABsiqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/iKC3/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/2uLp///////R2uP/dZGs/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/////////////////+3w9P+IoLf/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv9siqb/bIqm/2yKpv///////////+3w9P+tvc3/dZGs/2yKpv9siqb/bIqm/2yKpv9siqb/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH////////////0+Pv/erDR/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB//////////////////////96sNH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/TZbB/02Wwf////////////////+Ft9T/TZbB/02Wwf9NlsH/TZbB/02Wwf9NlsH/E4zV/xOM1f8TjNX/E4zV/yKT2P/T6ff/////////////////4fH6/z+i3f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f+m1O/////////////////////////////w+Pz/IpPY/xOM1f8TjNX/E4zV/xOM1f8TjNX/E4zV/xOM1f8TjNX////////////T6ff/Tqng/6bU7////////////3u/5/8TjNX/E4zV/xOM1f8TjNX/AIv//wCL//8Ai///AIv/////////////gMX//wCL//8gmv////////////+Axf//AIv//wCL//8Ai///AIv//wCL//8Ai///AIv//wCL///v+P///////+/4//+Axf//z+n/////////////YLf//wCL//8Ai///AIv//wCL//8Ai///AIv//wCL//8Ai///gMX/////////////////////////////z+n//wCL//8Ai///AIv//wCL//8Ai///AHr//wB6//8Aev//AHr//wB6//+Avf//7/f/////////////v97//xCC//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AHr//wB6//8Aev//AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA==';
-    // convertURIToImageData(URI).then(function (imageData) {
-    //   // Here you can use imageData
-    //   console.log('**********************method 1 imageObj');
-    //   console.log(imageData);
-    //   console.log('+++++++++++++++++++   direct logged imageObject');
-    //   console.log(myImg);
-    //   var img = new Image();
-    //   img.src = URI;
-    //   console.log('*********************method 2 logged imageObject');
-    //   console.log(img);
-    // });
+    function convertURIToImageData(URI) {
+      return new Promise(function (resolve, reject) {
+        if (URI == null) return reject();
+        var canvas = document.createElement('canvas'),
+          context = canvas.getContext('2d'),
+          image = new Image();
+        image.addEventListener(
+          'load',
+          function () {
+            canvas.width = image.width;
+            canvas.height = image.height;
+            context.drawImage(image, 0, 0, canvas.width, canvas.height);
+            resolve(context.getImageData(0, 0, canvas.width, canvas.height));
+          },
+          false
+        );
+        image.src = URI;
+      });
+    }
 
     // function printUploadedImg() {
     //   let myImageNodeEle = document.getElementById('myImage');
@@ -190,12 +189,42 @@ class Anvas extends Component {
         });
     }
 
+    // ! _______________________PRIMARY FUNCTIONS_______________________
+    // const sendLinearImgToServer = (base64Img) => {
+    //   // ? CONVERT 64 to file
+    //   urltoFile(base64Img, 'a.jpg').then(function (file) {
+    //     console.log(file);
+
+    //     var bodyFormData = new FormData();
+    //     bodyFormData.append('image', file);
+    //     //? REQUEST SERVER
+    //     axios({
+    //       method: 'post',
+    //       url: 'https://hesv-backend.herokuapp.com/equations/get-linear-equation',
+    //       data: bodyFormData,
+    //       headers: { 'Content-Type': 'multipart/form-data' },
+    //     })
+    //       .then(function (response) {
+    //         //handle success
+    //         console.log(response);
+    //       })
+    //       .catch(function (response) {
+    //         //handle error
+    //         console.log(response);
+    //       });
+    //   });
+    // };
     const sendLinearImgToServer = (base64Img) => {
-      urltoFile(base64Img, 'a.png').then(function (file) {
+      // ? CONVERT 64 to file
+      urltoFile(base64Img, 'equation.png').then(function (file) {
         console.log(file);
+        console.log(file);
+        console.log(file);
+        console.log(typeof file);
 
         var bodyFormData = new FormData();
         bodyFormData.append('image', file);
+        //? REQUEST SERVER
         axios({
           method: 'post',
           url: 'https://hesv-backend.herokuapp.com/equations/get-linear-equation',
@@ -213,30 +242,67 @@ class Anvas extends Component {
       });
     };
 
-    // !Send Polynomial Equation to server
-    const sendPoliImgToServer = (base64Img) => {
-      urltoFile(base64Img, 'a.png').then(function (file) {
-        console.log(file);
+    const solve2dLinearWorking = () => {
+      const firstField = document.getElementById('firstField');
+      const secondField = document.getElementById('secondField');
 
-        var bodyFormData = new FormData();
-        bodyFormData.append('image', file);
-        axios({
-          method: 'post',
-          url: 'https://hesv-backend.herokuapp.com/equations/get-linear-equation',
-          data: bodyFormData,
-          headers: {
-            'Content-Type': 'multipart/form-data',
-          },
+      console.log(firstField.value);
+      console.log(firstField.value);
+
+      var bodyFormData = new FormData();
+      bodyFormData.append('equation1', firstField.value);
+      bodyFormData.append('equation2', secondField.value);
+
+      axios({
+        method: 'post',
+        url: 'https://hesv-backend.herokuapp.com/equations/solve-2d-linear-equation',
+        data: bodyFormData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then(function (response) {
+          //handle success
+          console.log('successfully solved :::: ', response);
+          console.log(response);
+          console.log(response.data.x);
+          console.log(response.data.y);
+          setSolnData(response.data.x, response.data.y);
         })
-          .then(function (response) {
-            //handle success
-            console.log(response);
-          })
-          .catch(function (response) {
-            //handle error
-            console.log(response);
-          });
-      });
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
+    };
+
+    const solve3dLinearWorking = () => {
+      const firstField = document.getElementById('first3dEqn');
+      const secondField = document.getElementById('second3dEqn');
+      const thirdField = document.getElementById('third3dEqn');
+
+      console.log(firstField.value);
+      console.log(secondField.value);
+      console.log(thirdField.value);
+
+      var bodyFormData = new FormData();
+      bodyFormData.append('equation1', firstField.value);
+      bodyFormData.append('equation2', secondField.value);
+      bodyFormData.append('equation3', thirdField.value);
+
+      axios({
+        method: 'post',
+        url: 'https://hesv-backend.herokuapp.com/equations/solve-3d-linear-equation',
+        data: bodyFormData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then(function (response) {
+          //handle success
+          console.log('successfully solved :::: ', response);
+          console.log(response);
+          setSolnData(response.data.x, response.data.y, response.data.z);
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
     };
 
     return (
@@ -263,8 +329,8 @@ class Anvas extends Component {
               <header>
                 <h1>2 Variables</h1>
               </header>
-              <input className="left__eqnField" type="text" />
-              <input className="left__eqnField" type="text" />
+              <input className="left__eqnField" type="text" id="firstField" />
+              <input className="left__eqnField" type="text" id="secondField" />
             </div>
             <div
               className="upper__division__right"
@@ -276,12 +342,46 @@ class Anvas extends Component {
               <header>
                 <h1>3 Variables</h1>
               </header>
-              <input className="right__solnField" type="text" />
-              <input className="right__solnField" type="text" />
+              <input className="right__solnField" type="text" id="first3dEqn" />
+              <input
+                className="right__solnField"
+                type="text"
+                id="second3dEqn"
+              />
+              <input className="right__solnField" type="text" id="third3dEqn" />
+            </div>
+            <div
+              className="upper__division__right"
+              style={{
+                position: 'relative',
+                borderBottom: '1px solid #ccc',
+              }}
+            >
+              <header>
+                <h1>Calculation</h1>
+              </header>
+              <input
+                className="right__solnField"
+                type="text"
+                value={`x=${this.state.x}`}
+                disabled
+              />
+              <input
+                className="right__solnField"
+                type="text"
+                value={`y=${this.state.y}`}
+                disabled
+              />
+              <input
+                className="right__solnField"
+                type="text"
+                value={`z=${this.state.z}`}
+                disabled
+              />
               <Button
                 style={{
-                  background: 'transparent',
-                  color: 'red',
+                  background: 'white',
+                  color: 'black',
                   fontWidth: 'bolder',
                   outline: 'none',
                   border: 'none',
@@ -312,21 +412,20 @@ class Anvas extends Component {
               >
                 GetDataURL
               </button>
-              <button
-                onClick={() => {
-                  localStorage.setItem(
-                    'savedDrawing',
-                    this.saveableCanvas.getSaveData()
-                  );
-                }}
-              >
-                Save
-              </button>
+
               <Button ghost>Send</Button>
-              <Button tertiary>Solve</Button>
+              <Button tertiary onClick={solve2dLinearWorking}>
+                Solve 2D Linear
+              </Button>
+              <Button tertiary onClick={solve3dLinearWorking}>
+                Solve 3D Linear
+              </Button>
             </div>
             <CanvasDraw
-              style={{ borderRadius: '10px', width: '100%' }}
+              style={{
+                borderRadius: '10px',
+                width: '100%',
+              }}
               ref={(canvasDraw) => (this.saveableCanvas = canvasDraw)}
               brushColor={this.state.color}
               brushRadius={this.state.brushRadius}
@@ -341,7 +440,7 @@ class Anvas extends Component {
             />
           </div>
         </div>
-        <Graph></Graph>
+        <Graph x={this.state.x} y={this.state.y} z={this.state.z}></Graph>
       </WholeContainer>
     );
   }

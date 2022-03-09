@@ -1,19 +1,23 @@
 import functionPlot from 'function-plot';
 import React, { useEffect } from 'react';
 
-function Graph() {
+function Graph({ x, y, z }) {
   useEffect(() => {
     functionPlot({
       target: '#testII',
       width: '580',
       height: '400',
+      zAxis: {
+        label: 'y axis',
+        domain: [0, z],
+      },
       yAxis: {
         label: 'y axis',
-        domain: [0, 40],
+        domain: [0, y],
       },
       xAxis: {
         label: 'x axis',
-        domain: [0, 30],
+        domain: [0, x],
       },
       data: [
         {

@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import styled, { css } from 'styled-components';
+import axios from 'axios';
 import CanvasDraw from '../../../../../src';
 import './index.css';
 import GraphII from '../GraphII';
@@ -133,9 +134,50 @@ class AnvasII extends Component {
       'https://upload.wikimedia.org/wikipedia/commons/a/a1/Nepalese_Mhapuja_Mandala.jpg',
       'https://i.imgur.com/a0CGGVC.jpg',
     ],
+    x: 0,
+    y: 0,
+    z: 0,
   };
 
   render() {
+    const setSolnData = (x, y, z) => {
+      this.setState({
+        x: x,
+        y: y,
+        z: z,
+      });
+    };
+
+    function solvePolyEqnHandler() {
+      const inputField = document.getElementById('fieldPolyEqn');
+      alert(inputField.value);
+
+      //  https://hesv-backend.herokuapp.com/equations/solve-polynomial-equation
+
+      var bodyFormData = new FormData();
+      bodyFormData.append('equation', inputField.value);
+
+      axios({
+        method: 'post',
+        url: 'https://hesv-backend.herokuapp.com/equations/solve-polynomial-equation',
+        data: bodyFormData,
+        headers: { 'Content-Type': 'multipart/form-data' },
+      })
+        .then(function (response) {
+          //handle success
+          console.log('successfully solved :::: ', response);
+          console.log(response);
+          setSolnData(
+            response.data.solutions[0],
+            response.data.solutions[1],
+            response.data.solutions[2]
+          );
+        })
+        .catch(function (response) {
+          //handle error
+          console.log(response);
+        });
+    }
     return (
       <WholeContainer>
         <div
@@ -159,14 +201,30 @@ class AnvasII extends Component {
               <header>
                 <h1>Draw A Polynomial Equation</h1>
               </header>
-              <input className="left__eqnField" type="text" />
+              <input className="left__eqnField" type="text" id="fieldPolyEqn" />
               <div
                 style={{
                   display: 'flex',
                 }}
               >
-                <input className="left__eqnField" type="text" />
-                <input className="left__eqnField" type="text" />
+                <input
+                  className="left__eqnField"
+                  type="text"
+                  disabled
+                  value={`x = ${this.state.x}`}
+                />
+                <input
+                  className="left__eqnField"
+                  type="text"
+                  disabled
+                  value={`y = ${this.state.y}`}
+                />
+                <input
+                  className="left__eqnField"
+                  type="text"
+                  disabled
+                  value={`z = ${this.state.z}`}
+                />
               </div>
             </div>
           </UpperDivision>
@@ -181,7 +239,9 @@ class AnvasII extends Component {
                 Erase
               </Button>
               <Button ghost>Send</Button>
-              <Button tertiary>Solve</Button>
+              <Button tertiary onClick={solvePolyEqnHandler}>
+                Solve
+              </Button>
             </div>
             <CanvasDraw
               style={{ borderRadius: '10px', width: '100%' }}
@@ -199,7 +259,7 @@ class AnvasII extends Component {
             />
           </div>
         </div>
-        <GraphII></GraphII>
+        <GraphII x={this.state.x} y={this.state.y} z={this.state.z}></GraphII>
       </WholeContainer>
     );
   }
