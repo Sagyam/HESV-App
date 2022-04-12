@@ -1,0 +1,74 @@
+body {
+	display: flex;
+	flex-direction: column;
+	background-color: rgb(245, 245, 245);
+}
+
+.top-wrapper {
+	display: grid;
+	grid-template-columns: 2fr 1fr;
+}
+
+h1 {
+	font-size: 3rem;
+	font-weight: bold;
+	display: flex;
+	justify-content: center;
+}
+
+.equation-wrapper {
+	display: flex;
+	flex-direction: column;
+	align-items: center;
+}
+
+#poly-eqn {
+	font-size: 1.5rem;
+	font-weight: bold;
+	border: 2px solid black;
+	width: 60%;
+}
+
+small {
+	visibility: hidden;
+}
+
+small.missing-eqn {
+	visibility: visible;
+	color: red;
+}
+
+input.missing-eqn {
+	border: 2x solid red;
+}
+
+.solutions-wrapper {
+	display: grid;
+	grid-template-columns: 1fr 1fr 1fr;
+	grid-gap: 1rem;
+	margin-left: 20px;
+}
+
+.solution {
+	padding: 5px;
+	font-size: 1.5rem;
+	font-weight: bold;
+}
+
+.btn-wrapper {
+	display: flex;
+	flex-direction: row;
+	justify-content: flex-start;
+	margin-bottom: 40px;
+}
+
+button {
+	font: 1em sans-serif;
+	font-weight: bolder;
+	margin-right: 25px;
+	padding: 10px;
+}
+
+input {
+	text-align: center;
+}
