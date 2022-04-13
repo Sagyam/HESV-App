@@ -16,6 +16,8 @@ let calculator = Desmos.GraphingCalculator(
 	})
 );
 
+let drawer = null;
+
 let inputBox = document.getElementById("poly-eqn");
 inputBox.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox.value });
@@ -99,7 +101,13 @@ function dataURItoBlob(dataURI) {
 	return new Blob([new Uint8Array(array)], { type: "image/png" });
 }
 
-window.onload = function () {
+function clearCanvas() {
+	drawer = null;
+	$("#canvas-editor").empty();
+	setupCanvas();
+}
+
+function setupCanvas() {
 	drawer = new DrawerJs.Drawer(
 		null,
 		{
@@ -117,11 +125,30 @@ window.onload = function () {
 			},
 			activeColor: "#000000",
 			transparentBackground: false,
+			toolbars: {
+				drawingTools: {
+					positionType: "inside",
+				},
+
+				settings: {
+					positionType: "inside",
+				},
+			},
 		},
 
 		window.innerWidth * 0.9375,
-		window.innerHeight * 0.37037
+		window.innerHeight * 0.4
 	);
 	$("#canvas-editor").append(drawer.getHtml());
 	drawer.onInsert();
+}
+
+window.onload = function () {
+	setupCanvas();
+};
+
+window.onresize = function () {
+	var width = window.innerWidth * 0.9375;
+	var height = window.innerHeight * 0.37037;
+	drawer.api.setSize(width, height);
 };

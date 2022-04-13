@@ -11,6 +11,7 @@
 		/>
 		<link rel="stylesheet" href="dist/drawerJs.min.css" />
 		<link rel="stylesheet" href="style.css" />
+		<link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon" />
 		<title>Handwritten Eqiation Solver and Visualizer</title>
 	</head>
 	<body>
@@ -19,8 +20,7 @@
 				<div class="header"><h1>Polynomial Equation</h1></div>
 
 				<div class="equation-wrapper">
-					<input type="text"  id="poly-eqn" />
-					<small>Enter a Equation</small>
+					<input type="text" id="poly-eqn" />
 				</div>
 				<div class="solutions-wrapper" id="solutions-wrapper"></div>
 			</div>
@@ -30,8 +30,9 @@
 
 		<div class="canvas-wrapper">
 			<div class="btn-wrapper">
-				<button onclick="sendImage()">Send</button>
-				<button onclick="solve()">Solve</button>
+				<button onclick="sendImage()" id="send">Send</button>
+				<button onclick="solve()" id="solve">Solve</button>
+				<button onclick="clearCanvas()" id="clear">Reset</button>
 			</div>
 			<div id="canvas-editor"></div>
 		</div>
