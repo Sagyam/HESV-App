@@ -69,13 +69,11 @@ function polyDetectSuccess(result) {
 	let equation = result.equation;
 	let logs = result.debug_logs;
 	console.log(equation, logs);
-
 	calculator.setExpression({ id: "graph1", latex: equation });
 	inputBox.value = equation;
 }
 
 function polySolveSuccess(result) {
-	console.log(result);
 	let solutions = result.solutions;
 	let sol_type = result.solution_type;
 	let logs = result.debug_logs;

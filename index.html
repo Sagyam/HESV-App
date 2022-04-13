@@ -11,6 +11,7 @@
 		/>
 		<link rel="stylesheet" href="dist/drawerJs.min.css" />
 		<link rel="stylesheet" href="./css/poly.css" />
+		<link rel="stylesheet" href="./css/tooltip.css" />
 		<link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon" />
 		<title>Handwritten Eqiation Solver and Visualizer</title>
 	</head>
@@ -30,9 +31,20 @@
 
 		<div class="canvas-wrapper">
 			<div class="btn-wrapper">
-				<button onclick="sendImage()" id="send">Send</button>
-				<button onclick="solve()" id="solve">Solve</button>
-				<button onclick="clearCanvas()" id="clear">Reset</button>
+				<div class="tooltip">
+					<button onclick="sendImage()" id="send">Send</button>
+					<span class="tooltiptext">Send current image for inference</span>
+				</div>
+
+				<div class="tooltip">
+					<button onclick="solve()" id="solve">Solve</button>
+					<span class="tooltiptext">Solve current equation</span>
+				</div>
+
+				<div class="tooltip">
+					<button onclick="clearCanvas()" id="clear">Clear</button>
+					<span class="tooltiptext">Clear Canvas</span>
+				</div>
 			</div>
 			<div id="canvas-editor"></div>
 		</div>
