@@ -21,7 +21,36 @@ let inputBox = document.getElementById("poly-eqn");
 inputBox.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox.value });
 	toggleSolveBtn();
+	isPolyEqnValid();
 });
+
+function isPolyEqnValid() {
+	inputBox.classList.remove("error");
+
+	var errorBox = document.getElementById("local-error");
+	errorBox.innerHTML = "";
+
+	let eqn = inputBox.value;
+
+	let validCharsRegex = /[^xyzXYZ+-.=\^\d]/g;
+	let containsInvalid = !!eqn.match(validCharsRegex);
+
+	let tooManyEquals = eqn.split("=").length > 2;
+
+	//no repeating characters
+	let containsRepeat = !!eqn.match(/([xXyYzZ+-.=\^])\1/g);
+
+	if (containsInvalid) {
+		errorBox.innerHTML = "Invalid Character!";
+		inputBox.classList.add("error");
+	} else if (tooManyEquals) {
+		errorBox.innerHTML = "Too Many Equals!";
+		inputBox.classList.add("error");
+	} else if (containsRepeat) {
+		errorBox.innerHTML = "Repeating Characters!";
+		inputBox.classList.add("error");
+	}
+}
 
 //Get the buttons
 let sendBtn = document.getElementById("send");

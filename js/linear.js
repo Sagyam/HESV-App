@@ -27,10 +27,6 @@ let inputBox3 = document.getElementById("3");
 let errorBox = document.getElementById("errorBox");
 let warningBox = document.getElementById("warningBox");
 
-let localErrorBox1 = document.getElementById("local-error-1");
-let localErrorBox2 = document.getElementById("local-error-2");
-let localErrorBox3 = document.getElementById("local-error-3");
-
 let activeBox = inputBox1;
 
 // Listen for focus events
