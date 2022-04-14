@@ -119,6 +119,23 @@ input:active {
 	border: 3px solid #7f9cf5;
 }
 
+footer {
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: flex-end;
+	margin: 1rem 2.5rem;
+}
+
+a {
+	text-decoration: none;
+	color: #4f6cf0;
+	font-size: 1.5rem;
+}
+a:hover {
+	text-decoration: underline;
+}
+
 /* Prevents canvas from going crazy on touch screen */
 #canvas-editor {
 	touch-action: none;
