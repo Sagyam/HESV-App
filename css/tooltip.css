@@ -1,3 +1,5 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap");
+
 /* Tooltip container */
 .tooltip {
 	position: relative;
@@ -6,6 +8,7 @@
 
 /* Tooltip text */
 .tooltip .tooltiptext {
+	font-family: Merriweather, serif;
 	visibility: hidden;
 	width: 120px;
 	background-color: #555;

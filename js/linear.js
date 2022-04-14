@@ -7,7 +7,6 @@ const twoDegreeSolveUrl =
 const threeDegreeSolveUrl =
 	"https://hesv-backend.herokuapp.com/equations/solve-3d-linear-equation";
 
-let linearEqn = "";
 let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
 	elt,
@@ -64,7 +63,6 @@ function dataURItoBlob(dataURI) {
 }
 
 function sendImage() {
-	polyEqn = "";
 	let imageBase64 = drawer.api.getCanvasAsImage();
 	if (imageBase64) {
 		let blob = dataURItoBlob(imageBase64);
@@ -84,28 +82,6 @@ function sendImage() {
 	} else {
 		alert("Draw Something!!");
 	}
-}
-
-function solve() {
-	if (true) {
-		var requestOptions = {
-			method: "POST",
-			body: formData,
-			redirect: "follow",
-		};
-		fetch(polySolveUrl, requestOptions)
-			.then((response) => response.json())
-			.then((result) => linSolveSuccess(result))
-			.catch((error) => console.log("error", error));
-	} else {
-		alert("Enter Equation");
-	}
-}
-
-function linSolveSuccess(result) {
-	let solutions = result.solutions;
-	let sol_type = result.solution_type;
-	let logs = result.debug_logs;
 }
 
 function linDetectSuccess(result) {
@@ -128,6 +104,95 @@ function nextBox() {
 		activeBox = inputBox3;
 	} else {
 		activeBox = inputBox1;
+	}
+}
+
+function solve() {
+	let validEqns = getValidEqns();
+	let formData = new FormData();
+	validEqns.forEach((box, index) => {
+		formData.append(`equation${index + 1}`, box.value);
+	});
+
+	var requestOptions = {
+		method: "POST",
+		body: formData,
+		redirect: "follow",
+	};
+	if (validEqns.length === 2) {
+		fetch(twoDegreeSolveUrl, requestOptions)
+			.then((response) => response.json())
+			.then((result) => linSolveSuccess(result))
+			.catch((error) => console.log("error", error));
+	} else if (validEqns.length === 3) {
+		fetch(threeDegreeSolveUrl, requestOptions)
+			.then((response) => response.json())
+			.then((result) => linSolveSuccess(result))
+			.catch((error) => console.log("error", error));
+	} else if (validEqns.length < 2) {
+		alert("Enter 2 or more equations");
+	}
+}
+
+function getValidEqns() {
+	let nonEmptyBoxes = [];
+	if (inputBox1.value != "") {
+		nonEmptyBoxes.push(inputBox1);
+	}
+	if (inputBox2.value != "") {
+		nonEmptyBoxes.push(inputBox2);
+	}
+	if (inputBox3.value != "") {
+		nonEmptyBoxes.push(inputBox3);
+	}
+
+	return nonEmptyBoxes;
+}
+
+function linSolveSuccess(result) {
+	let xSpan = document.getElementById("x");
+	let ySpan = document.getElementById("y");
+	let zSpan = document.getElementById("z");
+
+	let xSolnDiv = document.getElementById("x-soln");
+	let ySolnDiv = document.getElementById("y-soln");
+	let zSolnDiv = document.getElementById("z-soln");
+
+	let errorBox = document.getElementById("errorBox");
+	let warningBox = document.getElementById("warningBox");
+
+	errorBox.classList.add("hidden");
+	warningBox.classList.add("hidden");
+
+	let x = result.x;
+	let y = result.y;
+	let z = result.z;
+
+	xSolnDiv.classList.remove("hide");
+	ySolnDiv.classList.remove("hide");
+	xSpan.innerText = x;
+	ySpan.innerText = y;
+
+	if (z) {
+		zSolnDiv.classList.remove("hide");
+		zSpan.innerText = z;
+	} else {
+		zSpan.innerText = "";
+		zSolnDiv.classList.add("hide");
+	}
+
+	let error = result.error;
+	let errorMessage = result.errorMessage;
+	let warningMessage = result.warningMessage;
+	let logs = result.debug_logs;
+
+	if (error) {
+		errorBox.classList.remove("hide");
+		errorBox.innerHTML = errorMessage;
+	}
+	if (warningMessage) {
+		warningBox.classList.remove("hide");
+		warningBox.innerHTML = warningMessage;
 	}
 }
 

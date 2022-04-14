@@ -25,12 +25,14 @@
 					<input type="text" class="lin-eqn" id="2" />
 					<input type="text" class="lin-eqn" id="3" />
 				</div>
-				<div class="solutions-wrapper" id="solutions-wrapper">
-					<div class="solution">X: <span id="x"></span></div>
-					<div class="solution">Y: <span id="y"></span></div>
-					<div class="solution">Z: <span id="z"></span></div>
-                    <div class="error"></div>
-
+				<div class="solutions-wrapper">
+					<div class="solution hide" id="x-soln">X: <span id="x"> 1</span></div>
+					<div class="solution hide" id="y-soln">Y: <span id="y"> 2</span></div>
+					<div class="solution hide" id="z-soln">Z: <span id="z"> 3</span></div>
+				</div>
+				<div class="message-wrapper">
+					<div class="error hide" id="errorBox">Error</div>
+					<div class="warning hide" id="warningBox">Warning</div>
 				</div>
 			</div>
 
@@ -46,7 +48,7 @@
 
 				<div class="tooltip">
 					<button onclick="solve()" id="solve">Solve</button>
-					<span class="tooltiptext">Solve current equation</span>
+					<span class="tooltiptext">Solve current system of equation</span>
 				</div>
 
 				<div class="tooltip">

@@ -1,7 +1,10 @@
+@import url("https://fonts.googleapis.com/css2?family=Merriweather:wght@400;700;900&display=swap");
+
 body {
 	display: flex;
 	flex-direction: column;
-	background-color: rgb(245, 245, 245);
+	background-color: #f8fafc;
+	font-family: "Merriweather", serif;
 }
 
 .top-wrapper {
@@ -33,13 +36,49 @@ h1 {
 	display: grid;
 	grid-template-columns: 1fr 1fr 1fr;
 	grid-gap: 1rem;
-	margin: 2rem;
+	margin: 1rem 2rem;
 }
 
 .solution {
 	padding: 5px;
 	font-size: 1.5rem;
-	font-weight: bold;
+	font-weight: 400;
+	margin-bottom: 1rem;
+}
+
+#x,
+#y,
+#z {
+	margin-left: 10px;
+	font-weight: 900;
+}
+
+.error {
+	color: #dc2626;
+	background-color: #fee2e2;
+	font-size: 1.5rem;
+	font-weight: 700;
+	padding: 5px;
+	border: 1px solid #dc2626;
+	border-radius: 5px;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.warning {
+	color: #ea580c;
+	background-color: #ffedd5;
+	font-size: 1.5rem;
+	font-weight: 700;
+	padding: 5px;
+	border: 1px solid #ea580c;
+	border-radius: 5px;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.hide {
+	display: none;
 }
 
 .btn-wrapper {
@@ -49,13 +88,19 @@ h1 {
 	margin-bottom: 1rem;
 }
 
+.message-wrapper {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem 2rem;
+}
+
 .canvas-wrapper {
 	margin-left: 2rem;
 }
 
 button {
-	font: 1em sans-serif;
-	font-weight: bolder;
+	font-size: 1.5rem;
+	font-weight: 700;
 	margin-right: 25px;
 	padding: 10px;
 	border-radius: 5px;
@@ -95,16 +140,16 @@ input {
 	text-align: center;
 	border-radius: 5px;
 	margin-bottom: 1rem;
+	padding: 5px;
 }
 
 input:focus,
 input:active {
 	outline: none;
-	border: 4px solid rgb(147 197 253);
+	border: 3px solid #7f9cf5;
 }
 
 /* Prevents canvas from going crazy on touch screen */
 #canvas-editor {
 	touch-action: none;
 }
-
