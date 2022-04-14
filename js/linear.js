@@ -26,7 +26,6 @@ let inputBox2 = document.getElementById("2");
 let inputBox3 = document.getElementById("3");
 
 // Listen for focus events
-
 inputBox1.addEventListener("focus", function () {
 	activeBox = inputBox1;
 });
@@ -40,18 +39,54 @@ inputBox3.addEventListener("focus", function () {
 });
 
 //Listen for keypress events
-
 inputBox1.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox1.value });
+	toggleSolveBtn();
 });
 
 inputBox2.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph2", latex: inputBox2.value });
+	toggleSolveBtn();
 });
 
 inputBox3.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph3", latex: inputBox3.value });
+	toggleSolveBtn();
 });
+
+//Get the buttons
+let sendBtn = document.getElementById("send");
+let solveBtn = document.getElementById("solve");
+
+function toggleSendBtn() {
+	let imageBase64 = drawer.api.getCanvasAsImage();
+	let tooltip = document.getElementById("send-tooltip");
+	if (imageBase64) {
+		sendBtn.disabled = false;
+		tooltip.innerHTML = "Send Image for Inference";
+	} else {
+		sendBtn.disabled = true;
+		tooltip.innerHTML = "Draw Something First!";
+	}
+}
+
+//Listen for drawing events
+let canvas = document.getElementById("canvas-editor");
+canvas.addEventListener("click", function (event) {
+	toggleSendBtn();
+});
+
+function toggleSolveBtn() {
+	let eqnCount = getValidEqns().length;
+	let tooltip = document.getElementById("solve-tooltip");
+	if (eqnCount >= 2) {
+		solveBtn.disabled = false;
+		tooltip.innerHTML = "Solve this System of Equations";
+	} else {
+		solveBtn.disabled = true;
+		tooltip.innerHTML = "Two or More Equations Required!";
+	}
+}
 
 function dataURItoBlob(dataURI) {
 	var binary = atob(dataURI.split(",")[1]);
@@ -95,6 +130,7 @@ function linDetectSuccess(result) {
 	calculator.setExpression({ id: activeBox.id, latex: equation });
 	activeBox.value = equation;
 	nextBox();
+	toggleSolveBtn();
 }
 
 function nextBox() {
@@ -200,6 +236,7 @@ function clearCanvas() {
 	drawer = null;
 	$("#canvas-editor").empty();
 	setupCanvas();
+	toggleSendBtn();
 }
 
 function setupCanvas() {

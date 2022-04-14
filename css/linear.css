@@ -116,6 +116,12 @@ button {
 	background-color: rgb(4 120 87);
 }
 
+#send:disabled {
+	outline: none;
+	opacity: 0.3;
+	background-color: gray;
+}
+
 #solve {
 	color: white;
 	border: none;
@@ -124,6 +130,12 @@ button {
 
 #solve:hover {
 	background-color: rgb(109 40 217);
+}
+
+#solve:disabled {
+	outline: none;
+	opacity: 0.3;
+	background-color: gray;
 }
 
 #clear {
