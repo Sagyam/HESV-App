@@ -19,11 +19,12 @@ let calculator = Desmos.GraphingCalculator(
 );
 
 let drawer = null;
-let activeBox = null;
 
 let inputBox1 = document.getElementById("1");
 let inputBox2 = document.getElementById("2");
 let inputBox3 = document.getElementById("3");
+
+let activeBox = inputBox1;
 
 // Listen for focus events
 inputBox1.addEventListener("focus", function () {
@@ -88,6 +89,10 @@ function toggleSolveBtn() {
 	}
 }
 
+function togglePleaseWait() {
+	activeBox.value = "Please Wait...";
+}
+
 function dataURItoBlob(dataURI) {
 	var binary = atob(dataURI.split(",")[1]);
 	var array = [];
@@ -109,7 +114,7 @@ function sendImage() {
 			body: formData,
 			redirect: "follow",
 		};
-
+		togglePleaseWait();
 		fetch(linearDetectUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => linDetectSuccess(result))
@@ -123,10 +128,6 @@ function linDetectSuccess(result) {
 	let equation = result.equation;
 	let logs = result.debug_logs;
 	console.log(equation, logs);
-
-	if (!activeBox) {
-		activeBox = inputBox1;
-	}
 	calculator.setExpression({ id: activeBox.id, latex: equation });
 	activeBox.value = equation;
 	nextBox();

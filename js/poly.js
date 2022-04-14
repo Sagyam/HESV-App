@@ -57,6 +57,10 @@ function toggleSolveBtn() {
 	}
 }
 
+function togglePleaseWait() {
+	inputBox.value = "Please Wait...";
+}
+
 function sendImage() {
 	let imageBase64 = drawer.api.getCanvasAsImage();
 	if (imageBase64) {
@@ -69,7 +73,7 @@ function sendImage() {
 			body: formData,
 			redirect: "follow",
 		};
-
+		togglePleaseWait();
 		fetch(polyDetectUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => polyDetectSuccess(result))
