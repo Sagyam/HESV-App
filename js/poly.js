@@ -4,7 +4,6 @@ const polyDetectUrl =
 const polySolveUrl =
 	"https://hesv-backend.herokuapp.com/equations/solve-polynomial-equation";
 
-let polyEqn = "";
 let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
 	elt,
@@ -21,10 +20,44 @@ let drawer = null;
 let inputBox = document.getElementById("poly-eqn");
 inputBox.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox.value });
+	toggleSolveBtn();
 });
 
+//Get the buttons
+let sendBtn = document.getElementById("send");
+let solveBtn = document.getElementById("solve");
+
+function toggleSendBtn() {
+	let imageBase64 = drawer.api.getCanvasAsImage();
+	let tooltip = document.getElementById("send-tooltip");
+	if (imageBase64) {
+		sendBtn.disabled = false;
+		tooltip.innerHTML = "Send Image for Inference";
+	} else {
+		sendBtn.disabled = true;
+		tooltip.innerHTML = "Draw Something First!";
+	}
+}
+
+//Listen for drawing events
+let canvas = document.getElementById("canvas-editor");
+canvas.addEventListener("click", function (event) {
+	toggleSendBtn();
+});
+
+function toggleSolveBtn() {
+	let eqn = inputBox.value;
+	let tooltip = document.getElementById("solve-tooltip");
+	if (eqn.length > 0) {
+		solveBtn.disabled = false;
+		tooltip.innerHTML = "Solve this equation";
+	} else {
+		solveBtn.disabled = true;
+		tooltip.innerHTML = "Enter a equation!";
+	}
+}
+
 function sendImage() {
-	polyEqn = "";
 	let imageBase64 = drawer.api.getCanvasAsImage();
 	if (imageBase64) {
 		let blob = dataURItoBlob(imageBase64);
@@ -103,6 +136,7 @@ function clearCanvas() {
 	drawer = null;
 	$("#canvas-editor").empty();
 	setupCanvas();
+	toggleSendBtn();
 }
 
 function setupCanvas() {

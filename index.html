@@ -32,13 +32,15 @@
 		<div class="canvas-wrapper">
 			<div class="btn-wrapper">
 				<div class="tooltip">
-					<button onclick="sendImage()" id="send">Send</button>
-					<span class="tooltiptext">Send current image for inference</span>
+					<button onclick="sendImage()" id="send" disabled>Send</button>
+					<span class="tooltiptext" id="send-tooltip"
+						>Draw Something First!</span
+					>
 				</div>
 
 				<div class="tooltip">
-					<button onclick="solve()" id="solve">Solve</button>
-					<span class="tooltiptext">Solve current equation</span>
+					<button onclick="solve()" id="solve" disabled>Solve</button>
+					<span class="tooltiptext" id="solve-tooltip">Enter a Equation</span>
 				</div>
 
 				<div class="tooltip">
