@@ -104,6 +104,7 @@ function polyDetectSuccess(result) {
 	console.log(equation, logs);
 	calculator.setExpression({ id: "graph1", latex: equation });
 	inputBox.value = equation;
+	toggleSolveBtn();
 }
 
 function polySolveSuccess(result) {
