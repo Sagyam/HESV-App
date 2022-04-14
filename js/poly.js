@@ -104,9 +104,10 @@ function solve() {
 
 function polyDetectSuccess(result) {
 	let equation = result.equation;
+	let desmosEqn = result.desmos_eqn;
 	let logs = result.debug_logs;
 	console.log(equation, logs);
-	calculator.setExpression({ id: "graph1", latex: equation });
+	calculator.setExpression({ id: "graph1", latex: desmosEqn });
 	inputBox.value = equation;
 	toggleSolveBtn();
 }
