@@ -31,7 +31,7 @@
 		<link rel="stylesheet" href="./css/linear.css" />
 		<link rel="stylesheet" href="./css/tooltip.css" />
 		<link rel="shortcut icon" href="./images/favicon.png" type="image/x-icon" />
-		<title>Handwritten Eqiation Solver and Visualizer</title>
+		<title>Handwritten Equation Solver and Visualizer</title>
 	</head>
 	<body>
 		<div class="top-wrapper">
@@ -40,13 +40,16 @@
 
 				<div class="equation-wrapper">
 					<input type="text" class="lin-eqn" id="1" />
+					<div class="local-error" id="local-error-1"></div>
 					<input type="text" class="lin-eqn" id="2" />
+					<div class="local-error" id="local-error-2"></div>
 					<input type="text" class="lin-eqn" id="3" />
+					<div class="local-error" id="local-error-3"></div>
 				</div>
 				<div class="solutions-wrapper">
-					<div class="solution hide" id="x-soln">X: <span id="x"> 1</span></div>
-					<div class="solution hide" id="y-soln">Y: <span id="y"> 2</span></div>
-					<div class="solution hide" id="z-soln">Z: <span id="z"> 3</span></div>
+					<div class="solution hide" id="x-soln">X: <span id="x"> </span></div>
+					<div class="solution hide" id="y-soln">Y: <span id="y"> </span></div>
+					<div class="solution hide" id="z-soln">Z: <span id="z"> </span></div>
 				</div>
 				<div class="message-wrapper">
 					<div class="error hide" id="errorBox">Error</div>

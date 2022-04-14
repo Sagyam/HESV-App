@@ -160,6 +160,17 @@ input:active {
 	border: 3px solid #7f9cf5;
 }
 
+input.error {
+	border: 3px solid #dc2626;
+	background-color: #fee2e2;
+}
+
+.local-error {
+	margin-bottom: 1rem;
+	color: #dc2626;
+	font-weight: 900;
+}
+
 footer {
 	display: flex;
 	flex-direction: column;

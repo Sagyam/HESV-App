@@ -24,6 +24,13 @@ let inputBox1 = document.getElementById("1");
 let inputBox2 = document.getElementById("2");
 let inputBox3 = document.getElementById("3");
 
+let errorBox = document.getElementById("errorBox");
+let warningBox = document.getElementById("warningBox");
+
+let localErrorBox1 = document.getElementById("local-error-1");
+let localErrorBox2 = document.getElementById("local-error-2");
+let localErrorBox3 = document.getElementById("local-error-3");
+
 let activeBox = inputBox1;
 
 // Listen for focus events
@@ -43,17 +50,48 @@ inputBox3.addEventListener("focus", function () {
 inputBox1.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox1.value });
 	toggleSolveBtn();
+	isLinearEqnValid();
 });
 
 inputBox2.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph2", latex: inputBox2.value });
 	toggleSolveBtn();
+	isLinearEqnValid();
 });
 
 inputBox3.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph3", latex: inputBox3.value });
 	toggleSolveBtn();
+	isLinearEqnValid();
 });
+
+function isLinearEqnValid() {
+	activeBox.classList.remove("error");
+	let id = activeBox.id;
+	var errorBox = document.getElementById(`local-error-${id}`);
+	errorBox.innerHTML = "";
+
+	let eqn = activeBox.value;
+
+	let validCharsRegex = /[^xyzXYZ+-.=\d]/g;
+	let containsInvalid = !!eqn.match(validCharsRegex);
+
+	let tooManyEquals = eqn.split("=").length > 2;
+
+	//no repeating characters
+	let containsRepeat = !!eqn.match(/([xXyYzZ+-.=\^])\1/g);
+
+	if (containsInvalid) {
+		errorBox.innerHTML = "Invalid Character!";
+		activeBox.classList.add("error");
+	} else if (tooManyEquals) {
+		errorBox.innerHTML = "Too Many Equals!";
+		activeBox.classList.add("error");
+	} else if (containsRepeat) {
+		errorBox.innerHTML = "Repeating Characters!";
+		activeBox.classList.add("error");
+	}
+}
 
 //Get the buttons
 let sendBtn = document.getElementById("send");
@@ -194,9 +232,6 @@ function linSolveSuccess(result) {
 	let xSolnDiv = document.getElementById("x-soln");
 	let ySolnDiv = document.getElementById("y-soln");
 	let zSolnDiv = document.getElementById("z-soln");
-
-	let errorBox = document.getElementById("errorBox");
-	let warningBox = document.getElementById("warningBox");
 
 	errorBox.classList.add("hidden");
 	warningBox.classList.add("hidden");
