@@ -245,7 +245,6 @@ function setupCanvas() {
 		{
 			texts: customLocalization,
 			plugins: ["Pencil", "Eraser"],
-
 			defaultActivePlugin: { name: "Pencil", mode: "lastUsed" },
 			pluginsConfig: {
 				Eraser: {
