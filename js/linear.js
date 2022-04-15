@@ -11,10 +11,10 @@ let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
 	elt,
 	(options = {
-		// settingsMenu: false,
-		// keypad: false,
-		// expressionsTopbar: false,
-		// expressions: false,
+		settingsMenu: false,
+		keypad: false,
+		expressionsTopbar: false,
+		expressions: false,
 	})
 );
 //set z to 0 intially
@@ -88,6 +88,20 @@ function isLinearEqnValid() {
 	} else if (containsRepeat) {
 		errorBox.innerHTML = "Repeating Characters!";
 		activeBox.classList.add("error");
+	}
+}
+
+//This validation should run only when input box loses focus
+function validateOnFocusOut(event) {
+	let errorBox = document.getElementById(`local-error-${event.target.id}`);
+	errorBox.innerHTML = "";
+	event.target.classList.remove("error");
+
+	eqn = event.target.value;
+	let isValid = eqn.split("=").length == 2;
+	if (!isValid) {
+		errorBox.innerHTML = "Equation Must Contain One Equals Sign!";
+		event.target.classList.add("error");
 	}
 }
 
