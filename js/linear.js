@@ -132,7 +132,7 @@ canvas.addEventListener("click", function (event) {
 function toggleSolveBtn() {
 	let eqnCount = getNonEmptyEqns().length;
 	let tooltip = document.getElementById("solve-tooltip");
-	console.log(noErrors());
+
 	if (eqnCount >= 2 && noErrors()) {
 		solveBtn.disabled = false;
 		tooltip.innerHTML = "Solve this System of Equations";

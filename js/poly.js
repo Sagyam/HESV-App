@@ -20,8 +20,8 @@ let drawer = null;
 let inputBox = document.getElementById("poly-eqn");
 inputBox.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox.value });
-	toggleSolveBtn();
 	isPolyEqnValid();
+	toggleSolveBtn();
 });
 
 function isPolyEqnValid() {
@@ -32,7 +32,7 @@ function isPolyEqnValid() {
 
 	let eqn = inputBox.value;
 
-	let validCharsRegex = /[^xyzXYZ+-.=\^\d]/g;
+	let validCharsRegex = /[^xX+-.=\^\d]/g;
 	let containsInvalid = !!eqn.match(validCharsRegex);
 
 	let tooManyEquals = eqn.split("=").length > 2;
@@ -77,12 +77,13 @@ canvas.addEventListener("click", function (event) {
 function toggleSolveBtn() {
 	let eqn = inputBox.value;
 	let tooltip = document.getElementById("solve-tooltip");
-	if (eqn.length > 0) {
+	let noError = document.getElementById("local-error").innerHTML.length === 0;
+	if (eqn.length > 1 && noError) {
 		solveBtn.disabled = false;
 		tooltip.innerHTML = "Solve this equation";
 	} else {
 		solveBtn.disabled = true;
-		tooltip.innerHTML = "Enter a equation!";
+		tooltip.innerHTML = "Enter a valid equation!";
 	}
 }
 
