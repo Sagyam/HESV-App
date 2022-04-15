@@ -48,19 +48,16 @@ inputBox3.addEventListener("focus", function () {
 inputBox1.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox1.value });
 	isLinearEqnValid();
-	toggleSolveBtn();
 });
 
 inputBox2.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph2", latex: inputBox2.value });
 	isLinearEqnValid();
-	toggleSolveBtn();
 });
 
 inputBox3.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph3", latex: inputBox3.value });
 	isLinearEqnValid();
-	toggleSolveBtn();
 });
 
 function isLinearEqnValid() {
@@ -89,6 +86,7 @@ function isLinearEqnValid() {
 		errorBox.innerHTML = "Repeating Characters!";
 		activeBox.classList.add("error");
 	}
+	toggleSolveBtn();
 	return !containsInvalid && !tooManyEquals && !containsRepeat;
 }
 
@@ -213,6 +211,7 @@ function linDetectSuccess(result) {
 
 function linDetectFailure(error) {
 	errorBox.classList.remove("hide");
+	warningBox.classList.add("hide");
 	errorBox.innerHTML = "Sorry, I couldn't  detect any equation.";
 
 	inputBox.value = "";
@@ -264,8 +263,8 @@ function linSolveSuccess(result) {
 	let ySolnDiv = document.getElementById("y-soln");
 	let zSolnDiv = document.getElementById("z-soln");
 
-	errorBox.classList.add("hidden");
-	warningBox.classList.add("hidden");
+	errorBox.classList.add("hide");
+	warningBox.classList.add("hide");
 
 	let x = result.x;
 	let y = result.y;
@@ -303,6 +302,7 @@ function linSolveSuccess(result) {
 
 function linSolveFailure(result) {
 	errorBox.classList.remove("hide");
+	warningBox.classList.add("hide");
 	errorBox.innerHTML = "Sorry, I couldn't solve this equation.";
 
 	let xSolnDiv = document.getElementById("x-soln");
