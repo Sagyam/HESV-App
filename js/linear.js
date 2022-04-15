@@ -47,20 +47,20 @@ inputBox3.addEventListener("focus", function () {
 //Listen for keypress events
 inputBox1.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph1", latex: inputBox1.value });
-	toggleSolveBtn();
 	isLinearEqnValid();
+	toggleSolveBtn();
 });
 
 inputBox2.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph2", latex: inputBox2.value });
-	toggleSolveBtn();
 	isLinearEqnValid();
+	toggleSolveBtn();
 });
 
 inputBox3.addEventListener("keyup", function (event) {
 	calculator.setExpression({ id: "graph3", latex: inputBox3.value });
-	toggleSolveBtn();
 	isLinearEqnValid();
+	toggleSolveBtn();
 });
 
 function isLinearEqnValid() {
@@ -89,6 +89,7 @@ function isLinearEqnValid() {
 		errorBox.innerHTML = "Repeating Characters!";
 		activeBox.classList.add("error");
 	}
+	return !containsInvalid && !tooManyEquals && !containsRepeat;
 }
 
 //This validation should run only when input box loses focus
@@ -99,10 +100,11 @@ function validateOnFocusOut(event) {
 
 	eqn = event.target.value;
 	let isValid = eqn.split("=").length == 2;
-	if (!isValid) {
+	if (!isValid && eqn != "") {
 		errorBox.innerHTML = "Equation Must Contain One Equals Sign!";
 		event.target.classList.add("error");
 	}
+	return isValid;
 }
 
 //Get the buttons
@@ -128,15 +130,39 @@ canvas.addEventListener("click", function (event) {
 });
 
 function toggleSolveBtn() {
-	let eqnCount = getValidEqns().length;
+	let eqnCount = getNonEmptyEqns().length;
 	let tooltip = document.getElementById("solve-tooltip");
-	if (eqnCount >= 2) {
+	console.log(noErrors());
+	if (eqnCount >= 2 && noErrors()) {
 		solveBtn.disabled = false;
 		tooltip.innerHTML = "Solve this System of Equations";
 	} else {
 		solveBtn.disabled = true;
-		tooltip.innerHTML = "Two or More Equations Required!";
+		tooltip.innerHTML = "Two or More Valid Equations Required!";
 	}
+}
+
+function noErrors() {
+	return (
+		!document.getElementById("local-error-1").innerHTML.length &&
+		!document.getElementById("local-error-2").innerHTML.length &&
+		!document.getElementById("local-error-3").innerHTML.length
+	);
+}
+
+function getNonEmptyEqns() {
+	let nonEmptyEqn = [];
+	if (inputBox1.value != "") {
+		nonEmptyEqn.push(inputBox1);
+	}
+	if (inputBox2.value != "") {
+		nonEmptyEqn.push(inputBox2);
+	}
+	if (inputBox3.value != "") {
+		nonEmptyEqn.push(inputBox3);
+	}
+
+	return nonEmptyEqn;
 }
 
 function togglePleaseWait() {
@@ -189,13 +215,13 @@ function nextBox() {
 		activeBox = inputBox2;
 	} else if (activeBox == inputBox2) {
 		activeBox = inputBox3;
-	} else {
+	} else if (activeBox == inputBox3) {
 		activeBox = inputBox1;
 	}
 }
 
 function solve() {
-	let validEqns = getValidEqns();
+	let validEqns = getNonEmptyEqns();
 	let formData = new FormData();
 	validEqns.forEach((box, index) => {
 		formData.append(`equation${index + 1}`, box.value);
@@ -219,21 +245,6 @@ function solve() {
 	} else if (validEqns.length < 2) {
 		alert("Enter 2 or more equations");
 	}
-}
-
-function getValidEqns() {
-	let nonEmptyBoxes = [];
-	if (inputBox1.value != "") {
-		nonEmptyBoxes.push(inputBox1);
-	}
-	if (inputBox2.value != "") {
-		nonEmptyBoxes.push(inputBox2);
-	}
-	if (inputBox3.value != "") {
-		nonEmptyBoxes.push(inputBox3);
-	}
-
-	return nonEmptyBoxes;
 }
 
 function linSolveSuccess(result) {
