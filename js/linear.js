@@ -104,6 +104,7 @@ function validateOnFocusOut(event) {
 		errorBox.innerHTML = "Equation Must Contain One Equals Sign!";
 		event.target.classList.add("error");
 	}
+	toggleSolveBtn();
 	return isValid;
 }
 
@@ -194,7 +195,7 @@ function sendImage() {
 		fetch(linearDetectUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => linDetectSuccess(result))
-			.catch((error) => console.log("error", error));
+			.catch((error) => linDetectFailure(error));
 	} else {
 		alert("Draw Something!!");
 	}
@@ -208,6 +209,13 @@ function linDetectSuccess(result) {
 	activeBox.value = equation;
 	nextBox();
 	toggleSolveBtn();
+}
+
+function linDetectFailure(error) {
+	errorBox.classList.remove("hide");
+	errorBox.innerHTML = "Sorry, I couldn't  detect any equation.";
+
+	inputBox.value = "";
 }
 
 function nextBox() {
@@ -236,12 +244,12 @@ function solve() {
 		fetch(twoDegreeSolveUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => linSolveSuccess(result))
-			.catch((error) => console.log("error", error));
+			.catch((error) => linSolveFailure(error));
 	} else if (validEqns.length === 3) {
 		fetch(threeDegreeSolveUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => linSolveSuccess(result))
-			.catch((error) => console.log("error", error));
+			.catch((error) => linSolveFailure(error));
 	} else if (validEqns.length < 2) {
 		alert("Enter 2 or more equations");
 	}
@@ -291,6 +299,19 @@ function linSolveSuccess(result) {
 		warningBox.classList.remove("hide");
 		warningBox.innerHTML = warningMessage;
 	}
+}
+
+function linSolveFailure(result) {
+	errorBox.classList.remove("hide");
+	errorBox.innerHTML = "Sorry, I couldn't solve this equation.";
+
+	let xSolnDiv = document.getElementById("x-soln");
+	let ySolnDiv = document.getElementById("y-soln");
+	let zSolnDiv = document.getElementById("z-soln");
+
+	xSolnDiv.classList.add("hide");
+	ySolnDiv.classList.add("hide");
+	zSolnDiv.classList.add("hide");
 }
 
 function clearCanvas() {
