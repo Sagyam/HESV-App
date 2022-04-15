@@ -11,12 +11,14 @@ let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
 	elt,
 	(options = {
-		settingsMenu: false,
-		keypad: false,
-		expressionsTopbar: false,
-		expressions: false,
+		// settingsMenu: false,
+		// keypad: false,
+		// expressionsTopbar: false,
+		// expressions: false,
 	})
 );
+//set z to 0 intially
+calculator.setExpression({ id: "graph4", latex: "z=0" });
 
 let drawer = null;
 
@@ -244,9 +246,11 @@ function linSolveSuccess(result) {
 	if (z) {
 		zSolnDiv.classList.remove("hide");
 		zSpan.innerText = z;
+		calculator.setExpression({ id: "graph4", latex: `z=${z}` });
 	} else {
 		zSpan.innerText = "";
 		zSolnDiv.classList.add("hide");
+		calculator.setExpression({ id: "graph4", latex: "z=0" });
 	}
 
 	let error = result.error;
