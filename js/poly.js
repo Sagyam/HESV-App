@@ -24,6 +24,8 @@ inputBox.addEventListener("keyup", function (event) {
 	toggleSolveBtn();
 });
 
+let errorBox = document.getElementById("errorBox");
+
 function isPolyEqnValid() {
 	inputBox.classList.remove("error");
 
@@ -107,7 +109,7 @@ function sendImage() {
 		fetch(polyDetectUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => polyDetectSuccess(result))
-			.catch((error) => console.log("error", error));
+			.catch((error) => polyDetectFailure(error));
 	} else {
 		alert("Draw Something!!");
 	}
@@ -126,7 +128,7 @@ function solve() {
 		fetch(polySolveUrl, requestOptions)
 			.then((response) => response.json())
 			.then((result) => polySolveSuccess(result))
-			.catch((error) => console.log("error", error));
+			.catch((error) => polySolveFailure(error));
 	} else {
 		alert("Enter Equation");
 	}
@@ -136,16 +138,30 @@ function polyDetectSuccess(result) {
 	let equation = result.equation;
 	let desmosEqn = result.desmos_eqn;
 	let logs = result.debug_logs;
+
+	errorBox.classList.add("hide");
+	errorBox.innerHTML = "";
+
 	console.log(equation, logs);
 	calculator.setExpression({ id: "graph1", latex: desmosEqn });
 	inputBox.value = equation;
 	toggleSolveBtn();
 }
 
+function polyDetectFailure(error) {
+	errorBox.classList.remove("hide");
+	errorBox.innerHTML = "Sorry, I couldn't  detect any equation.";
+
+	inputBox.value = "";
+}
+
 function polySolveSuccess(result) {
 	let solutions = result.solutions;
 	let sol_type = result.solution_type;
 	let logs = result.debug_logs;
+
+	errorBox.classList.add("hide");
+	errorBox.innerHTML = "";
 
 	let solutionsWrapper = document.getElementById("solutions-wrapper");
 	solutionsWrapper.innerHTML = "";
@@ -157,6 +173,14 @@ function polySolveSuccess(result) {
 			`X <sub>` + eval(i + 1) + `</sub> = ` + solutions[i];
 		solutionsWrapper.appendChild(solution_div);
 	}
+}
+
+function polySolveFailure(error) {
+	errorBox.classList.remove("hide");
+	errorBox.innerHTML = "Sorry, I couldn't solve this equation.";
+
+	let solutionsWrapper = document.getElementById("solutions-wrapper");
+	solutionsWrapper.innerHTML = "";
 }
 
 function dataURItoBlob(dataURI) {

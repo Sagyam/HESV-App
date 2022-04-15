@@ -51,8 +51,30 @@ h1 {
 	margin-bottom: 1rem;
 }
 
+.message-wrapper {
+	display: flex;
+	flex-direction: column;
+	margin: 1rem 2rem;
+}
+
 .canvas-wrapper {
 	margin-left: 2rem;
+}
+
+.error {
+	color: #dc2626;
+	background-color: #fee2e2;
+	font-size: 1.5rem;
+	font-weight: 700;
+	padding: 5px;
+	border: 1px solid #dc2626;
+	border-radius: 5px;
+	text-align: center;
+	margin-bottom: 1rem;
+}
+
+.hide {
+	display: none;
 }
 
 button {
