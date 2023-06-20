@@ -1,8 +1,8 @@
 const polyDetectUrl =
-	"https://hesv-api-production.up.railway.app/get-polynomial-equation";
+	"https://hesv-api-production.up.railway.app/equations/get-polynomial-equation";
 
 const polySolveUrl =
-	"https://hesv-api-production.up.railway.app/solve-polynomial-equation";
+	"https://hesv-api-production.up.railway.app/equations/solve-polynomial-equation";
 
 let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
