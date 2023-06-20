@@ -1,11 +1,11 @@
 const linearDetectUrl =
-	"https://web-production-5ee8.up.railway.app/equations/get-linear-equation";
+	"https://hesv-api-production.up.railway.app/equations/get-linear-equation";
 
 const twoDegreeSolveUrl =
-	"https://web-production-5ee8.up.railway.app//equations/solve-2d-linear-equation";
+	"https://hesv-api-production.up.railway.app/equations/solve-2d-linear-equation";
 
 const threeDegreeSolveUrl =
-	"https://web-production-5ee8.up.railway.app/equations/solve-3d-linear-equation";
+	"https://hesv-api-production.up.railway.app/equations/solve-3d-linear-equation";
 
 let elt = document.getElementById("calculator");
 let calculator = Desmos.GraphingCalculator(
